@@ -1,7 +1,6 @@
 .container {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, #4B0082, #9B30FF); /* roxo escuro → roxo claro */
+
+  background-color: #19171a;
   box-sizing: border-box;
 }
 
@@ -17,10 +16,10 @@
 .movies-grid {
   display: flex;
   gap: 16px;
-  width: 90%; /* Ocupa 100% da largura do container */
-  max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
-  padding: 1.5em; 
-  overflow-x: auto; /* Permite scroll horizontal quando necessário */
+  width: 90%; 
+  max-width: 90vw; 
+  padding: 5em; 
+  overflow-x: auto; 
   box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: #888 transparent;
@@ -47,12 +46,12 @@
 
 .movie-card:hover {
   transform: scale(1.05);
-  border: purple solid 2px;
+  border: white solid 2px;
   z-index: 10;
 }
 
 .movies-grid.hover-active .movie-card {
-  box-shadow: 0 4px 16px rgb(128 0 128 / 0.7);
+  box-shadow: 0 4px 16px white;
 }
 
 .movie-poster-wrapper {
@@ -126,63 +125,13 @@ mat-card-content p {
 
 .titulogrid{
   color: white;
+  margin-left: 2.5em;
 }
 
-.carousel-container {
-  position: relative;
-  max-width: 100%;
-  overflow: hidden;
-  text-align: center;
-  background: #000;
-  color: #fff;
-}
-
-.carousel-slide {
-  position: relative;
-}
-
-.carousel-image {
-  width: 100%;
-  height: 25em;
-  object-fit: cover;
-  display: block;
-}
-
-.carousel-caption {
-  position: absolute;
-  bottom: 20px;
-  left: 30px;
-  color: white;
-  text-shadow: 2px 2px 8px #000;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 8px 16px;
-  border-radius: 4px;
-}
-
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  border: none;
-  color: white;
-  font-size: 2rem;
-  padding: 0 12px;
-  cursor: pointer;
-  user-select: none;
-  z-index: 10;
-  border-radius: 4px;
-}
-
-.carousel-btn.prev {
-  left: 10px;
-}
-
-.carousel-btn.next {
-  right: 10px;
-}
-
-.carousel-btn:hover {
-  background-color: rgba(0,0,0,0.8);
+.main-container {
+  margin-left: 8em; 
+  flex: 1;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 

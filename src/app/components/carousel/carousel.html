@@ -1,0 +1,17 @@
+<div class="carousel-container" *ngIf="movies?.length && movies.length > 0">
+  <button class="carousel-btn prev" (click)="prevSlide()">&#10094;</button>
+ <a [routerLink]="['/movies', movies[currentSlide].id]" style="text-decoration: none; color: inherit;">
+  <div class="carousel-slide">
+    <img
+      class="carousel-image"
+      [src]="'https://image.tmdb.org/t/p/original' + movies[currentSlide].backdrop_path"
+      [alt]="movies[currentSlide].title"
+    />
+    <div class="carousel-caption">
+      <h2>{{ movies[currentSlide].title }}</h2>
+      <p>{{ movies[currentSlide].overview }}</p>
+    </div>
+  </div>
+</a>
+  <button class="carousel-btn next" (click)="nextSlide()">&#10095;</button>
+</div>

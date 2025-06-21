@@ -1,17 +1,30 @@
-<div class="movies-grid">
-  <mat-card *ngFor="let movie of movies" class="movie-card">
-    <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
-      <img
-        *ngIf="movie.poster_path"
-        mat-card-image
-        [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-        [alt]="movie.title"
-      />
-      <mat-card-content>
-        <h3>{{ movie.title }}</h3>
-        <p>{{ movie.overview }}</p>
-        <p>Nota: {{ movie.vote_average }}</p>
-      </mat-card-content>
-    </a>
-  </mat-card>
+<div class="carousel-wrapper">
+  <button class="carousel-btn prev" (click)="scrollLeft()"><mat-icon>arrow_left</mat-icon></button>
+  <h2 class="titulogrid">{{ title }}</h2>
+  <div class="movies-carousel" #carousel>
+    <mat-card *ngFor="let movie of movies" class="movie-card">
+      <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
+        <div class="movie-poster-wrapper">
+          <img
+            *ngIf="movie.poster_path"
+            mat-card-image
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+            [alt]="movie.title"
+          />
+          <div class="movie-overlay">
+            <h3 class="movie-title">{{ movie.title }}</h3>
+            <p class="movie-overview">{{ movie.overview }}</p>
+            <p class="movie-rating">
+              <span class="rating-container">
+                <mat-icon>star</mat-icon>
+                {{ movie.vote_average }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </a>
+    </mat-card>
+  </div>
+
+  <button class="carousel-btn next" (click)="scrollRight()"><mat-icon>arrow_right</mat-icon></button>
 </div>

@@ -11,6 +11,10 @@ import { Movie } from '../../models/movie.interface';
 import { MovieService } from '../../services/movie';
 import { Subject, takeUntil } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { MoviesGrid } from '../../movies-grid/movies-grid/movies-grid';
+import { Navbar } from '../../navbar/navbar';
+import { Carousel } from '../../carousel/carousel';
+import { Genreslist } from '../../genreslist/genreslist';
 
 @Component({
   standalone: true,
@@ -25,6 +29,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatChipsModule,
     MatIconModule, 
     MatPaginatorModule,
+    MoviesGrid,
+    Navbar,
+    Carousel,
+    Genreslist
   ],
   templateUrl: './movies.html',
   styleUrls: ['./movies.css'] 
@@ -110,4 +118,15 @@ export class Movies implements OnInit, OnDestroy {
     if (this.movies.length === 0) return;
     this.currentSlide = (this.currentSlide === this.movies.length - 1) ? 0 : this.currentSlide + 1;
   }
+
+onGenreSelected(genreId: number) {
+  console.log('Gênero selecionado:', genreId);
+  this.movieService.getMoviesByGenre(genreId).subscribe((res) => {
+    this.movies = res.results;
+  });
+
+  this.movieService.getUpcomingMoviesByGenre(genreId).subscribe((res) => {
+    this.upmovies = res.results;
+  });
+}
 }

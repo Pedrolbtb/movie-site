@@ -18,14 +18,11 @@
   
         <div class="details">
           <h1>{{ movie.title }}</h1>
-          <p>{{ movie.release_date }}</p>
+          <p>{{ movie.release_date | date: 'dd/MM/yyyy' }}</p>
   
           <div class="meta">
             <mat-chip-set>
-              <mat-chip color="accent">
-                {{ movie.vote_average }}
-              </mat-chip>
-              <mat-chip>{{ movie.release_date | date : "yyyy" }}</mat-chip>
+         
                <mat-chip>{{ genresList }}</mat-chip>
                <mat-chip>Nota: {{ movie.vote_average }}</mat-chip>
 
@@ -37,6 +34,9 @@
             <h3>Sinopse</h3>
             <p>{{ movie.overview }}</p>
           </div>
+            <app-actorlist [movieId]="movie.id"></app-actorlist>
+
+
           <a [routerLink]="['/']">
           <button mat-raised-button color="primary" (click)="goBack()">
             Voltar

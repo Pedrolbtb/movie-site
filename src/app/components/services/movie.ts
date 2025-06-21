@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { MovieCredits } from '../models/movie.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,24 +21,20 @@ export class MovieService {
         language: 'pt-BR'
       }
     }).pipe(
-      tap(response => console.log('[MovieService] getMovies response:', response))
     );
   }
 
   getMovieDetails(id: number): Observable<any> {
-    console.log(`[MovieService] getMovieDetails called with id = ${id}`);
     return this.http.get<any>(`${this.apiUrl}/movie/${id}`, {
       params: {
         api_key: this.apiKey,
         language: 'pt-BR'
       }
     }).pipe(
-      tap(response => console.log('[MovieService] getMovieDetails response:', response))
     );
   }
   
   searchMovies(query: string, page: number = 1): Observable<any> {
-    console.log(`[MovieService] searchMovies called with query = "${query}", page = ${page}`);
     return this.http.get<any>(`${this.apiUrl}/search/movie`, {
       params: {
         api_key: this.apiKey,
@@ -46,12 +43,10 @@ export class MovieService {
         language: 'pt-BR'
       }
     }).pipe(
-      tap(response => console.log('[MovieService] searchMovies response:', response))
     );
   }
 
   getUpcomingMovies(page: number = 1): Observable<any> {
-    console.log(`[MovieService] getUpcomingMovies called with page = ${page}`);
     return this.http.get<any>(`${this.apiUrl}/movie/upcoming`, {
       params: {
         api_key: this.apiKey,
@@ -59,7 +54,58 @@ export class MovieService {
         language: 'pt-BR'
       }
     }).pipe(
-      tap(response => console.log('[MovieService] getUpcomingMovies response:', response))
     );
   }
+
+getMovieCredits(movieId: number): Observable<MovieCredits> {
+  return this.http.get<MovieCredits>(
+
+    `${this.apiUrl}/movie/${movieId}/credits`,
+    {
+      params: {
+        api_key: this.apiKey,
+        language: 'pt-BR'
+      }
+    }
+  );
+}
+
+getGenres() {
+  return this.http.get<{ genres: { id: number; name: string }[] }>(
+    `${this.apiUrl}/genre/movie/list`,
+    {
+      params: {
+        api_key: this.apiKey,
+        language: 'pt-BR'
+      }
+    }
+  );
+}
+
+getMoviesByGenre(genreId: number, page: number = 1): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/discover/movie`, {
+    params: {
+      api_key: this.apiKey,
+      with_genres: genreId.toString(),
+      page: page.toString(),
+      language: 'pt-BR'
+    }
+  });
+}
+
+getUpcomingMoviesByGenre(genreId: number, page: number = 1): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/discover/movie`, {
+    params: {
+      api_key: this.apiKey,
+      with_genres: genreId.toString(),
+      sort_by: 'release_date.asc',
+      page: page.toString(),
+      language: 'pt-BR',
+      'primary_release_date.gte': new Date().toISOString().split('T')[0]
+    }
+  });
+}
+
+
+
 }

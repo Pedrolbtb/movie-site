@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Movie } from '../models/movie.interface';
 import { MovieService } from '../services/movie';
+import { Actorlist } from '../actorlist/actorlist';
 
 @Component({
   standalone: true,
@@ -19,7 +20,8 @@ import { MovieService } from '../services/movie';
     MatButtonModule, 
     MatProgressSpinnerModule, 
     MatChipsModule, 
-    MatPaginatorModule
+    MatPaginatorModule,
+    Actorlist
   ],
   templateUrl: './moviedetails.html',
   styleUrls: ['./moviedetails.css']
@@ -46,7 +48,6 @@ export class Moviedetails implements OnInit {
     this.loading = true;
     this.movieService.getMovieDetails(id).subscribe({
       next: (data) => {
-        console.log('Dados recebidos:', data);
         this.movie = data;
 
 this.genresList = this.movie!.genres.map(g => g.name).join(', ');

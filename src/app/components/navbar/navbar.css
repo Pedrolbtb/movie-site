@@ -8,12 +8,14 @@
 }
 
 .vertical-navbar {
+  position: fixed;
   display: flex;
   flex-direction: column;
   width: 8em;
   height: 100%;
-  background:  #4B0082; /* roxo escuro → roxo claro */
+  background:  #19171a; 
   padding: 16px 0;
+  z-index: 1000;
 }
 .vertical-navbar a {
   color: #fff;
@@ -25,7 +27,5 @@
 font-size: 36em;
 }
 
-.btn-navbar{
-}
 
 

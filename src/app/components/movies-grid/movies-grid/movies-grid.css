@@ -1,0 +1,189 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #4B0082, #9B30FF); /* roxo escuro → roxo claro */
+  box-sizing: border-box;
+}
+
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+  padding-left: 8px;
+}
+
+.movies-grid {
+  display: flex;
+  gap: 16px;
+  width: 90%; 
+  max-width: 90vw; 
+  padding: 1.5em; 
+  overflow-x: auto; 
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+  align-items: flex-start;
+}
+
+
+
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 15%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  transform-origin: center bottom;
+  z-index: 1;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  border: white solid 2px;
+  z-index: 10;
+}
+
+.movies-grid.hover-active .movie-card {
+  box-shadow: 0 4px 16px white;
+}
+
+.movie-poster-wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+.movie-poster-wrapper:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-overview {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.movie-rating {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+
+.movie-card img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+  border-bottom: 1px solid #444;
+}
+
+mat-card-content {
+  padding: 8px 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+mat-card-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+mat-card-content p {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-style: normal;
+}
+
+.titulogrid{
+  color: white;
+  margin-left: 1.5em;
+}
+
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 0 2em;
+  padding-right: 4em;
+}
+
+.movies-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  scroll-behavior: smooth;
+  padding: 2em;
+  padding-right: 4em;
+}
+
+.movies-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  font-size: 2rem;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  z-index: 10;
+  background: transparent;
+}
+
+.carousel-btn.prev {
+  transform: scale(3);
+  left: 8px;
+  color: #fff
+}
+
+.carousel-btn.next {
+  right: 8px;
+  scale: 3;  
+  color: #fff
+}
+
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* espaço entre a estrela e o número */
+  font-weight: bold;
+  color: gold; /* opcional: deixa a estrela dourada */
+}
+
+.rating-container mat-icon {
+  font-size: 1.2em; /* ajusta o tamanho da estrela se necessário */
+}
+
