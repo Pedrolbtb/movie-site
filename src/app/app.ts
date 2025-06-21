@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Navbar } from './components/navbar/navbar';
+import { Moviedetails } from './components/moviedetails/moviedetails';
+import { SearchDialog } from '../app/components/search-dialog/search-dialog/search-dialog';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, Navbar, Moviedetails],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
-  protected title = 'movie-site';
+  protected title = 'MovieSite';
 }

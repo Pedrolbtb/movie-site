@@ -1,0 +1,60 @@
+<div class="carousel-container" *ngIf="movies?.length && movies.length > 0">
+  <button class="carousel-btn prev" (click)="prevSlide()">&#10094;</button>
+ <a [routerLink]="['/movies', movies[currentSlide].id]" style="text-decoration: none; color: inherit;">
+  <div class="carousel-slide">
+    <img
+      class="carousel-image"
+      [src]="'https://image.tmdb.org/t/p/original' + movies[currentSlide].backdrop_path"
+      [alt]="movies[currentSlide].title"
+    />
+    <div class="carousel-caption">
+      <h2>{{ movies[currentSlide].title }}</h2>
+    </div>
+  </div>
+</a>
+  <button class="carousel-btn next" (click)="nextSlide()">&#10095;</button>
+</div>
+
+<div class="container" *ngIf="movies?.length">
+  <h2 class="titulogrid">Filmes Populares</h2>
+  <div class="movies-grid">
+    <mat-card *ngFor="let movie of movies" class="movie-card">
+      <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
+        <div class="movie-poster-wrapper">
+          <img
+            *ngIf="movie.poster_path"
+            mat-card-image
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+            [alt]="movie.title"
+          />
+          <div class="movie-overlay">
+            <h3 class="movie-title">{{ movie.title }}</h3>
+            <p class="movie-overview">{{ movie.overview }}</p>
+            <p class="movie-rating"><mat-icon class="big-icon">star</mat-icon> {{ movie.vote_average }}</p>
+          </div>
+        </div>
+      </a>
+    </mat-card>
+  </div>
+
+  <h2 class="titulogrid">Filmes que vão lançar</h2>
+  <div class="movies-grid">
+   <mat-card *ngFor="let movie of upmovies" class="movie-card">
+      <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
+        <div class="movie-poster-wrapper">
+          <img
+            *ngIf="movie.poster_path"
+            mat-card-image
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+            [alt]="movie.title"
+          />
+          <div class="movie-overlay">
+            <h3 class="movie-title">{{ movie.title }}</h3>
+            <p class="movie-overview">{{ movie.overview }}</p>
+            <p class="movie-rating"><mat-icon class="big-icon">star</mat-icon> {{ movie.vote_average }}</p>
+          </div>
+        </div>
+      </a>
+    </mat-card>
+  </div>
+</div>

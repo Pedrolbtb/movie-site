@@ -1,0 +1,188 @@
+.container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #4B0082, #9B30FF); /* roxo escuro → roxo claro */
+  box-sizing: border-box;
+}
+
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+  padding-left: 8px;
+}
+
+.movies-grid {
+  display: flex;
+  gap: 16px;
+  width: 90%; /* Ocupa 100% da largura do container */
+  max-width: 90vw; /* Garante que não ultrapasse a largura da tela */
+  padding: 1.5em; 
+  overflow-x: auto; /* Permite scroll horizontal quando necessário */
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+  align-items: flex-start;
+}
+
+
+
+
+.movie-card {
+  flex: 0 0 auto;
+  width: 15%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  transform-origin: center bottom;
+  z-index: 1;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  border: purple solid 2px;
+  z-index: 10;
+}
+
+.movies-grid.hover-active .movie-card {
+  box-shadow: 0 4px 16px rgb(128 0 128 / 0.7);
+}
+
+.movie-poster-wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.movie-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+.movie-poster-wrapper:hover .movie-overlay {
+  opacity: 1;
+}
+
+.movie-overview {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.movie-rating {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: right;
+}
+
+
+.movie-card img {
+  width: 100%;
+  height: 50%;
+  object-fit: cover;
+  border-bottom: 1px solid #444;
+}
+
+mat-card-content {
+  padding: 8px 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+mat-card-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+mat-card-content p {
+  font-size: 0.85rem;
+  color: #bbb;
+  font-style: normal;
+}
+
+.titulogrid{
+  color: white;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: #000;
+  color: #fff;
+}
+
+.carousel-slide {
+  position: relative;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 25em;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  color: white;
+  text-shadow: 2px 2px 8px #000;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 0 12px;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  border-radius: 4px;
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+

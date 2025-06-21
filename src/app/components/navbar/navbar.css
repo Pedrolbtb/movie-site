@@ -1,0 +1,31 @@
+.spacer{
+    flex: 1 1 auto;
+}
+
+.logo{
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.vertical-navbar {
+  display: flex;
+  flex-direction: column;
+  width: 8em;
+  height: 100%;
+  background:  #4B0082; /* roxo escuro → roxo claro */
+  padding: 16px 0;
+}
+.vertical-navbar a {
+  color: #fff;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.big-icon {
+font-size: 36em;
+}
+
+.btn-navbar{
+}
+
+
