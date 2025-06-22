@@ -1,10 +1,10 @@
 .container {
   position: relative;
-  height: 100vh;       /* ocupa toda a tela */
+  height: 100vh;       
   width: 100vw;
   background-color: #141414;
   color: white;
-  overflow: hidden;    /* evita scroll na página */
+  overflow: hidden;   
 }
 
 .backdrop {
@@ -18,6 +18,7 @@
   background-repeat: no-repeat;
   z-index: 0;
 }
+
 
 .backdrop-overlay {
   position: absolute;
@@ -33,11 +34,11 @@
   position: relative;
   z-index: 2;
   max-width: 1200px;
-  height: 100%;      /* ocupar altura total da tela */
+  height: 100%;   
   margin: 0 auto;
   padding: 20px;
   display: flex;
-  align-items: center;  /* verticalmente centralizado */
+  align-items: center;
   gap: 40px;
   box-sizing: border-box;
 }
@@ -46,7 +47,7 @@
   flex-shrink: 0;
   width: 300px;
   height: 50vh;
-  max-height: 90vh;   /* para não ultrapassar a tela */
+  max-height: 90vh; 
 }
 
 .poster img {
@@ -67,15 +68,10 @@
   flex-direction: column;
   justify-content: center;  
   gap: 15px;               
+  
 }
 .details h1 {
   font-size: 2.5rem;
-}
-
-.meta {
-}
-
-.overview {
 }
 
 .overview h3 {
@@ -87,12 +83,20 @@
   color: #cccccc;
 }
 
+h3{
+   font-family: 'Limelight', cursive, sans-serif;
+}
+
+h1{
+   font-family: 'Limelight', cursive, sans-serif;
+}
 
 .movie-info {
   display: flex;
   gap: 40px;
-  align-items: center;       /* vertical */
-  justify-content: center;   /* horizontal */
-  height: 90vh;              /* ocupa quase toda a altura para centralizar bem */
-  max-width: 100%;           /* evita estourar a largura */
+  align-items: center;      
+  justify-content: center;  
+  height: 90vh;            
+  max-width: 100%;           
 }
+

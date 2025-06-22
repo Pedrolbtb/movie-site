@@ -18,9 +18,9 @@
 
       <div class="details">
         <h1>{{ movie.title }}</h1>
-        <p>{{ titleDataLancamento }}: {{ movie.release_date | date: 'dd/MM/yyyy' }}</p>
+        <h3>{{ titleDataLancamento }}: {{ movie.release_date | date: 'dd/MM/yyyy' }}</h3>
 
-        <div class="meta">
+        <div class="info">
           <mat-chip-set>
             <mat-chip>{{ genresList }}</mat-chip>
             <mat-chip>{{ titleNota }}: {{ movie.vote_average }}</mat-chip>

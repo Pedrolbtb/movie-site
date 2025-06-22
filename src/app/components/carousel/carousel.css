@@ -27,16 +27,20 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;         /* legenda ocupa toda a largura */
+  width: 100%; 
   background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
   color: white;
   padding: 16px 24px;
   box-sizing: border-box;
   text-align: left;
-  max-height: 40%;     /* limita o tamanho da legenda */
+  max-height: 40%;     
   overflow: hidden;
   text-shadow: 2px 2px 8px #000;
   border-radius: 0 0 8px 8px;
+}
+
+h2{
+   font-family: 'Limelight', cursive, sans-serif;
 }
 
 .carousel-btn {
