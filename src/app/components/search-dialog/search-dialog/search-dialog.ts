@@ -11,8 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subject, forkJoin, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 import { MovieService } from '../../services/movie';
 
 @Component({
@@ -50,10 +50,9 @@ export class SearchDialog implements OnInit {
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap(query => this.movieService.searchMovies(query))
-    ).subscribe((results: any) => {
-      this.searchResults = results.results;
-      console.log('Search results:', this.searchResults);
+      switchMap(query => this.combinedSearch(query))
+    ).subscribe(results => {
+      this.searchResults = results;
     });
   }
 
@@ -64,6 +63,53 @@ export class SearchDialog implements OnInit {
       this.searchResults = [];
     }
   }
+
+private combinedSearch(query: string) {
+  const aggregatedResults: any[] = [];
+
+  return forkJoin([
+    this.movieService.searchMovies(query),
+    this.movieService.searchPerson(query),
+    this.movieService.getGenres()
+  ]).pipe(
+    switchMap(([moviesRes, peopleRes, genresRes]) => {
+      aggregatedResults.push(...(moviesRes.results || []));
+
+      let personSearch$ = of([]);
+      if (peopleRes.results?.length > 0) {
+        const person = peopleRes.results[0];
+        personSearch$ = this.movieService.getPersonMovieCredits(person.id).pipe(
+          map(credits => credits.cast || [])
+        );
+      }
+
+      let genreSearch$ = of([]);
+      const matchedGenre = genresRes.genres.find((g: any) =>
+        g.name.toLowerCase() === query.toLowerCase()
+      );
+      if (matchedGenre) {
+        genreSearch$ = this.movieService.discoverByGenre(String(matchedGenre.id)).pipe(
+          map(data => data.results || [])
+        );
+      }
+
+      const year = parseInt(query, 10);
+      let yearSearch$ = of([]);
+      if (!isNaN(year) && query.length === 4) {
+        yearSearch$ = this.movieService.discoverByYear(year).pipe(
+          map(data => data.results || [])
+        );
+      }
+
+      return forkJoin([personSearch$, genreSearch$, yearSearch$]);
+    }),
+    map(([personResults, genreResults, yearResults]) => {
+      return [...aggregatedResults, ...personResults, ...genreResults, ...yearResults];
+    })
+  );
+}
+
+
 
   selectMovie(movie: any): void {
     this.dialogRef.close();

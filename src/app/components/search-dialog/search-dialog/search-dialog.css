@@ -34,8 +34,14 @@
     border-radius: 4px;
   }
 
+  .bigicon{
+    transform: scale(1.5);
+  }
+
   .movie-info {
     flex: 1;
+    color: white;
+    font-weight: 400;
   }
 
   .movie-info h3 {
@@ -45,6 +51,6 @@
 
   .year {
     margin: 4px 0 0;
-    color: rgba(0, 0, 0, 0.6);
+    color: white;
     font-size: 14px;
   }

@@ -1,11 +1,28 @@
 <app-navbar></app-navbar>
+
 <div class="main-container">
-<app-carousel [movies]="movies"></app-carousel>
-<app-genreslist (genreSelected)="onGenreSelected($event)"></app-genreslist>
+<app-carousel
+  [movies]="movies"
+  [currentSlide]="currentSlide"
+  (slideChange)="onSlideChanged($event)">
+</app-carousel>
 
-<div class="container" *ngIf="movies?.length">
-<app-movies-grid [movies]="movies" [title]="'Filmes Populares'"></app-movies-grid>
+ <app-genreslist (genreSelected)="onGenreSelected($event)"></app-genreslist>
 
-<app-movies-grid [movies]="upmovies" [title]="'Próximos lançamentos'"></app-movies-grid>
-</div>
+  <div class="container">
+<app-movies-grid
+  [movies]="movies"
+  [loadMoreOnScroll]="true"
+  (loadMore)="loadMoreMovies()"
+  [title]="titleFilmesEmAlta">
+</app-movies-grid>
+
+<app-movies-grid
+  [movies]="upmovies"
+  [loadMoreOnScroll]="true"
+  (loadMore)="loadMoreMovies()"
+  [title]="titleProximosLancamentos">
+</app-movies-grid>
+
+  </div>
 </div>

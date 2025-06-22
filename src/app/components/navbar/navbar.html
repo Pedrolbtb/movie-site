@@ -1,7 +1,10 @@
 <nav class="vertical-navbar">
-  <a mat-button routerLink="/" class="logo">Movie Site</a>
-  <a class="btn-navbar" mat-button routerLink="/"><mat-icon class="big-icon">whatshot</mat-icon></a>
-  <button mat-button (click)="openSearch()">
-    <mat-icon>search</mat-icon>
+  <h1 mat-button class="logo">Movie Site</h1>
+  <a class="btn-navbar" mat-button routerLink="/"><mat-icon class="big-icon">home</mat-icon></a>
+  <button class="btn-navbar" mat-button (click)="openSearch()">
+    <mat-icon class="big-icon">search</mat-icon>
+  </button>
+    <button class="btn-navbar" mat-button (click)="switchLanguage()">
+    <mat-icon class="big-icon">language</mat-icon>
   </button>
 </nav>

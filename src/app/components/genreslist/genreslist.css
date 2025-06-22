@@ -1,13 +1,13 @@
 .title {
     color: white;
     margin-left: 3em;
+    background-color: #19171a;
 }
 
 .genre-buttons {
-    padding: 0 1.2em;
+  padding: 0 1.2em;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 2em;
   gap: 12px;
   justify-content: center;
   background-color: #19171a;
@@ -16,6 +16,7 @@
 .genre-buttons button {
   background-color: #262327;
   color: white;
+  width: 10em;
   border: 1px solid white;
   border-radius: 20px;
   padding: 10px 18px;
@@ -34,5 +35,10 @@
 
 .genre-buttons button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.6);
+  box-shadow: 0 0 0 3px rgb(102, 102, 102);
+}
+
+.container{
+    background-color: #19171a;
+    padding: 0.5em;
 }

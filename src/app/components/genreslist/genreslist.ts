@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, EventEmitter, Inject, OnInit, Output, PLATFORM_ID } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MovieService } from '../services/movie';
 
@@ -13,10 +13,14 @@ import { MovieService } from '../services/movie';
 export class Genreslist implements OnInit {
 
   genres: { id: number; name: string }[] = [];
+  selectedGenreId: number | null = null;
 
-  @Output() genreSelected = new EventEmitter<number>();
+  @Output() genreSelected = new EventEmitter<number|null>();
 
-  constructor(private movieService: MovieService) {}
+  constructor(
+    private movieService: MovieService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.loadGenres();
@@ -34,7 +38,22 @@ export class Genreslist implements OnInit {
       });
   }
 
-  onGenreClick(id: number) {
+onGenreClick(id: number, event: Event) {
+  if (this.selectedGenreId === id) {
+    this.selectedGenreId = null;
+    this.genreSelected.emit(null); 
+    (event.target as HTMLButtonElement).blur();
+  } else {
+    this.selectedGenreId = id;
     this.genreSelected.emit(id);
+  }
+}
+
+  get titleGeneros(): string {
+    let lang = 'pt-BR';
+    if (isPlatformBrowser(this.platformId)) {
+      lang = localStorage.getItem('lang') || 'pt-BR';
+    }
+    return lang === 'en-US' ? 'Genres' : 'Gêneros';
   }
 }

@@ -5,12 +5,15 @@
 .logo{
     font-size: 1.2rem;
     font-weight: bold;
+    color: white;
+    text-align: center;
 }
 
 .vertical-navbar {
   position: fixed;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 8em;
   height: 100%;
   background:  #19171a; 
@@ -21,10 +24,30 @@
   color: #fff;
   margin: 8px 0;
   text-align: left;
+  
+}
+
+.vertical-navbar .big-icon,
+.vertical-navbar mat-icon {
+  color: #fff ;
+}
+
+
+.btn-navbar{
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  justify-content: center;
+  text-align: center;
+}
+
+.vertical-navbar a:hover {
+  transition: 0.2s ease;
+  
 }
 
 .big-icon {
-font-size: 36em;
+transform: scale(1.5);
 }
 
 

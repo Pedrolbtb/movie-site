@@ -1,49 +1,39 @@
 <div class="container" *ngIf="movie">
-    <div
-      class="backdrop"
-      [style.backgroundImage]="
-        'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'
-      ">
-      <div class="backdrop-overlay"></div>
-    </div>
-  
-    <div class="content">
-      <div class="movie-info">
-        <div class="poster">
-          <img
-            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-            [alt]="movie.title"
-          />
+  <div
+    class="backdrop"
+    [style.backgroundImage]="
+      'url(https://image.tmdb.org/t/p/original' + movie.backdrop_path + ')'
+    ">
+    <div class="backdrop-overlay"></div>
+  </div>
+
+  <div class="content">
+    <div class="movie-info">
+      <div class="poster">
+        <img
+          [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+          [alt]="movie.title"
+        />
+      </div>
+
+      <div class="details">
+        <h1>{{ movie.title }}</h1>
+        <p>{{ titleDataLancamento }}: {{ movie.release_date | date: 'dd/MM/yyyy' }}</p>
+
+        <div class="meta">
+          <mat-chip-set>
+            <mat-chip>{{ genresList }}</mat-chip>
+            <mat-chip>{{ titleNota }}: {{ movie.vote_average }}</mat-chip>
+          </mat-chip-set>
         </div>
-  
-        <div class="details">
-          <h1>{{ movie.title }}</h1>
-          <p>{{ movie.release_date | date: 'dd/MM/yyyy' }}</p>
-  
-          <div class="meta">
-            <mat-chip-set>
-         
-               <mat-chip>{{ genresList }}</mat-chip>
-               <mat-chip>Nota: {{ movie.vote_average }}</mat-chip>
+
+<div class="overview" *ngIf="movie?.overview && movie.overview.trim().length > 0">
+  <h3>{{ titleSinopse }}</h3>
+  <p>{{ movie.overview }}</p>
+</div>
 
 
-            </mat-chip-set>
-          </div>
-  
-          <div class="overview">
-            <h3>Sinopse</h3>
-            <p>{{ movie.overview }}</p>
-          </div>
-            <app-actorlist [movieId]="movie.id"></app-actorlist>
-
-
-          <a [routerLink]="['/']">
-          <button mat-raised-button color="primary" (click)="goBack()">
-            Voltar
-          </button>
-          </a>
-        </div>
       </div>
     </div>
   </div>
-  
+</div>

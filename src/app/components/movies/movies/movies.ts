@@ -1,16 +1,25 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router'; 
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+
+import { Subject, takeUntil } from 'rxjs';
 import { Movie } from '../../models/movie.interface';
 import { MovieService } from '../../services/movie';
-import { Subject, takeUntil } from 'rxjs';
-import { MatIconModule } from '@angular/material/icon';
+
 import { MoviesGrid } from '../../movies-grid/movies-grid/movies-grid';
 import { Navbar } from '../../navbar/navbar';
 import { Carousel } from '../../carousel/carousel';
@@ -20,14 +29,14 @@ import { Genreslist } from '../../genreslist/genreslist';
   standalone: true,
   selector: 'app-movies',
   imports: [
-    CommonModule, 
-    RouterModule, 
-    MatCardModule, 
-    MatButtonModule, 
-    MatListModule, 
-    MatProgressSpinnerModule, 
+    CommonModule,
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatListModule,
+    MatProgressSpinnerModule,
     MatChipsModule,
-    MatIconModule, 
+    MatIconModule,
     MatPaginatorModule,
     MoviesGrid,
     Navbar,
@@ -35,24 +44,24 @@ import { Genreslist } from '../../genreslist/genreslist';
     Genreslist
   ],
   templateUrl: './movies.html',
-  styleUrls: ['./movies.css'] 
+  styleUrls: ['./movies.css']
 })
 export class Movies implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private isBrowser: boolean;
+
   loading = false;
   loadingUpcoming = false;
   currentPage = 1;
+  currentSlide = 0;
+
   movies: Movie[] = [];
   upmovies: Movie[] = [];
   totalItens = 0;
   pageSize = 10;
-  currentSlide = 0; // índice do slide atual
-
-  private isBrowser: boolean;
 
   constructor(
-    private movieService: MovieService, 
-    private route: ActivatedRoute,
+    private movieService: MovieService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -69,17 +78,17 @@ export class Movies implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  loadMovies(): void {
+  loadMovies(page: number = 1): void {
     if (this.loading) return;
     this.loading = true;
-    this.cdr.detectChanges();
 
-    this.movieService.getMovies(this.currentPage)
+    this.movieService.getMovies(page)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           this.movies = response.results;
           this.totalItens = response.total_results;
+          this.currentPage = page;
           this.loading = false;
           this.cdr.detectChanges();
         },
@@ -109,6 +118,11 @@ export class Movies implements OnInit, OnDestroy {
       });
   }
 
+  onSlideChanged(newIndex: number): void {
+    this.currentSlide = newIndex;
+    this.cdr.markForCheck();
+  }
+
   prevSlide(): void {
     if (this.movies.length === 0) return;
     this.currentSlide = (this.currentSlide === 0) ? this.movies.length - 1 : this.currentSlide - 1;
@@ -119,14 +133,79 @@ export class Movies implements OnInit, OnDestroy {
     this.currentSlide = (this.currentSlide === this.movies.length - 1) ? 0 : this.currentSlide + 1;
   }
 
-onGenreSelected(genreId: number) {
-  console.log('Gênero selecionado:', genreId);
-  this.movieService.getMoviesByGenre(genreId).subscribe((res) => {
-    this.movies = res.results;
-  });
+  onGenreSelected(genreId: number | null): void {
+    if (genreId === null) {
+      this.currentPage = 1;
+      this.loadMovies();
+      this.loadUpcomingMovies();
+      return;
+    }
 
-  this.movieService.getUpcomingMoviesByGenre(genreId).subscribe((res) => {
-    this.upmovies = res.results;
-  });
-}
+    this.currentPage = 1;
+    this.loading = true;
+    this.loadingUpcoming = true;
+
+    this.movieService.getMoviesByGenre(genreId, this.currentPage)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.movies = res.results;
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        }
+      });
+
+    this.movieService.getUpcomingMoviesByGenre(genreId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.upmovies = res.results;
+          this.loadingUpcoming = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.loadingUpcoming = false;
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
+  loadMoreMovies(): void {
+    if (this.loading) return;
+    this.loading = true;
+    this.currentPage++;
+
+    this.movieService.getMovies(this.currentPage)
+      .subscribe({
+        next: (res) => {
+          this.movies = [...this.movies, ...res.results];
+          this.loading = false;
+        },
+        error: () => { this.loading = false; }
+      });
+  }
+
+  get titleFilmesEmAlta(): string {
+    if (this.isBrowser) {
+      const lang = localStorage.getItem('lang') || 'pt-BR';
+      return lang === 'en-US' ? 'Trending Movies' : 'Filmes em alta';
+    }
+    return 'Filmes em alta';
+  }
+
+  get titleProximosLancamentos(): string {
+    if (this.isBrowser) {
+      const lang = localStorage.getItem('lang') || 'pt-BR';
+      return lang === 'en-US' ? 'Upcoming Releases' : 'Próximos lançamentos';
+    }
+    return 'Próximos lançamentos';
+  }
+
+  hasMovies(arr?: Movie[]): boolean {
+    return Array.isArray(arr) && arr.length > 0;
+  }
 }

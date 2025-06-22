@@ -1,6 +1,10 @@
 <div class="carousel-wrapper">
-  <button class="carousel-btn prev" (click)="scrollLeft()"><mat-icon>arrow_left</mat-icon></button>
+  <button class="carousel-btn prev" (click)="scrollLeft()">
+    <mat-icon>arrow_left</mat-icon>
+  </button>
+
   <h2 class="titulogrid">{{ title }}</h2>
+
   <div class="movies-carousel" #carousel>
     <mat-card *ngFor="let movie of movies" class="movie-card">
       <a [routerLink]="['/movies', movie.id]" style="text-decoration: none; color: inherit;">
@@ -26,5 +30,7 @@
     </mat-card>
   </div>
 
-  <button class="carousel-btn next" (click)="scrollRight()"><mat-icon>arrow_right</mat-icon></button>
+  <button class="carousel-btn next" (click)="scrollRight()">
+    <mat-icon>arrow_right</mat-icon>
+  </button>
 </div>

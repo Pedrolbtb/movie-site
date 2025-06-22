@@ -3,7 +3,6 @@ import { Movie } from '../models/movie.interface';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-carousel',
   standalone: true,

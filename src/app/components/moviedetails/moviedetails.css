@@ -45,6 +45,7 @@
 .poster {
   flex-shrink: 0;
   width: 300px;
+  height: 50vh;
   max-height: 90vh;   /* para não ultrapassar a tela */
 }
 
@@ -64,8 +65,8 @@
   padding-right: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;  /* centraliza verticalmente */
-  gap: 15px;                /* espaçamento interno entre elementos */
+  justify-content: center;  
+  gap: 15px;               
 }
 .details h1 {
   font-size: 2.5rem;

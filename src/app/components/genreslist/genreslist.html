@@ -1,12 +1,13 @@
-<h2 class="title">Gêneros</h2>
-<div class="genre-buttons">
-  <button
-    *ngFor="let genre of genres"
-    (click)="onGenreClick(genre.id)"
-    mat-raised-button
-    color="primary"
-  >
-    {{ genre.name }}
-  </button>
+<div class="container">
+  <h2 class="title">{{ titleGeneros }}</h2>
+  <div class="genre-buttons">
+    <button
+      *ngFor="let genre of genres"
+      (click)="onGenreClick(genre.id, $event)"
+      mat-raised-button
+      color="primary"
+    >
+      {{ genre.name }}
+    </button>
+  </div>
 </div>
-

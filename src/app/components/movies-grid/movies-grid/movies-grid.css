@@ -28,19 +28,20 @@
 }
 
 
-
-
 .movie-card {
   flex: 0 0 auto;
   width: 15%;
-  border-radius: 8px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.3);
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
   display: flex;
   flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
   transform-origin: center bottom;
   z-index: 1;
 }
@@ -67,8 +68,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
+  backdrop-filter: blur(10px); /* desfoque de fundo */
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* borda suave */
   opacity: 0;
   transition: opacity 0.3s ease;
   padding: 12px;
@@ -77,6 +81,7 @@
   justify-content: center;
   box-sizing: border-box;
   font-size: 0.9rem;
+  border-radius: 12px;
 }
 
 .movie-poster-wrapper:hover .movie-overlay {
@@ -134,11 +139,13 @@ mat-card-content p {
   position: relative;
   overflow: hidden;
   padding: 0 2em;
+  background-color: #19171a;
   padding-right: 4em;
 }
 
 .movies-carousel {
   display: flex;
+  
   overflow-x: auto;
   gap: 16px;
   scroll-behavior: smooth;

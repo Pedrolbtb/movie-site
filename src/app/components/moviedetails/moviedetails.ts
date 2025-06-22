@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, Inject, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -8,7 +8,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Movie } from '../models/movie.interface';
 import { MovieService } from '../services/movie';
-import { Actorlist } from '../actorlist/actorlist';
 
 @Component({
   standalone: true,
@@ -21,50 +20,61 @@ import { Actorlist } from '../actorlist/actorlist';
     MatProgressSpinnerModule, 
     MatChipsModule, 
     MatPaginatorModule,
-    Actorlist
   ],
   templateUrl: './moviedetails.html',
   styleUrls: ['./moviedetails.css']
 })
 export class Moviedetails implements OnInit {
   movie?: Movie;
-  loading: boolean = false;
+  loading: boolean = true;
   genresList: string = '';
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private movieService: MovieService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = +params['id'];
-      this.loadMovieDetails(id);
-    });
+    const movieId = Number(this.route.snapshot.paramMap.get('id'));
+    if (movieId) {
+      this.movieService.getMovieDetails(movieId).subscribe({
+        next: (data) => {
+          this.movie = data;
+          this.genresList = data.genres.map((g: any) => g.name).join(', ');
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Erro ao carregar detalhes do filme:', err);
+          this.loading = false;
+        }
+      });
+    }
   }
 
-  loadMovieDetails(id: number): void {
-    this.loading = true;
-    this.movieService.getMovieDetails(id).subscribe({
-      next: (data) => {
-        this.movie = data;
-
-this.genresList = this.movie!.genres.map(g => g.name).join(', ');
-
-
-        this.loading = false;
-        this.cdr.detectChanges();  
-      },
-      error: (err) => {
-        console.error('Erro ao buscar detalhes:', err);
-        this.loading = false;
-        this.cdr.detectChanges();
-      }
-    });
+  get titleSinopse(): string {
+    let lang = 'pt-BR';
+    if (isPlatformBrowser(this.platformId)) {
+      lang = localStorage.getItem('lang') || 'pt-BR';
+    }
+    return lang === 'en-US' ? 'Synopsis' : 'Sinopse';
   }
 
-  goBack(): void {
-    window.history.back();
+  get titleNota(): string {
+    let lang = 'pt-BR';
+    if (isPlatformBrowser(this.platformId)) {
+      lang = localStorage.getItem('lang') || 'pt-BR';
+    }
+    return lang === 'en-US' ? 'Rating' : 'Nota';
+  }
+
+  get titleDataLancamento(): string {
+    let lang = 'pt-BR';
+    if (isPlatformBrowser(this.platformId)) {
+      lang = localStorage.getItem('lang') || 'pt-BR';
+    }
+    return lang === 'en-US' ? 'Release date' : 'Data de lançamento';
   }
 }
